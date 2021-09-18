@@ -1,22 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { GifGridItem } from './GifGridItem';
-import { getGifs } from '../helpers/getGifs';
+import { useFetchGifs } from '../hooks/useFetchGifs';
 
 export const GifGrid = ({ category }) => {
 
-
-    useEffect(() => {
-        getGifs( category ).then( setImgs );
-    }, [category])
-
-    const [imgs, setImgs] = useState([]);
-
     
+    const { data:imgs, loading } = useFetchGifs(category);
 
 
     return (
         <>    
             <h4> { category } </h4>
+
+            <p className="animate__flash"> 
+              <b> { loading && "CARGANDO ..." } </b>
+            </p>
+            
             <ol className="row-start">
                 { 
                     imgs.map( img =>
